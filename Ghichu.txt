@@ -1,9 +1,12 @@
-client ==> gõ router "/"
-router ==> chuyển đổi logich xử lý từ router điều hướng tới Controller 
-    ==> Controller : 
-            + điều hướng render  ***.ejs ==> tới Views
+👉 client gửi request 
+    + gõ router "/"
+    + Ấn nút button, events, ....
+👉 Router
+    + chuyển đổi logich xử lý từ router điều hướng tới Controller 
+👉 Controller : 
+    + điều hướng render  ***.ejs ==> tới Views
             ==> dữ liệu truyền tới trang web "/"
-            + truy xuất service lấy database ==> render DB tới View
+    + truy xuất service lấy database ==> render DB tới View
 
 
 
@@ -24,3 +27,8 @@ router ==> chuyển đổi logich xử lý từ router điều hướng tới Co
 👉 3. Tạo model: 
 👉 4: Tạo migrations:
 👉5. Tạo Seeder: npx sequelize-cli seed:generate --name demo-user
+
+#21 Kết Nối Tới MySQL Database với Sequelize
+👉 Khoi tao doi tuong sequelize : 'database', 'username', 'password', ...
+👉 Khoi tao func connectDB (trong models/index.js đã config connect tới Database)
+👉 Controller : import db để truy xuất Database

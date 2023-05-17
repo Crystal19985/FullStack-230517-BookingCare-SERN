@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -25,6 +25,7 @@ fs
     db[model.name] = model;
   });
 
+//Map tới All modelName : chinh la tất cả model trong folder models (VD: table user.js)
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
