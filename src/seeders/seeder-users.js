@@ -12,9 +12,22 @@ module.exports = {
      * }], {});
     */
     return queryInterface.bulkInsert('Users', [{
+      // email: DataTypes.STRING,
+      // password: DataTypes.STRING,
+      // firstName: DataTypes.STRING,
+      // lastName: DataTypes.STRING,
+      // address: DataTypes.STRING,
+      // gender: DataTypes.BOOLEAN,
+      // roleId: DataTypes.STRING,
+
+      email: 'admin@gmail.com',
+      password: '123456',
       firstName: 'John',
       lastName: 'Doe',
-      email: 'example@example.com',
+      address: 'HN',
+      gender: 1,
+      roleId: 'R1',
+
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

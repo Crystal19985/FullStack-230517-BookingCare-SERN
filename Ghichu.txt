@@ -32,3 +32,7 @@
 👉 Khoi tao doi tuong sequelize : 'database', 'username', 'password', ...
 👉 Khoi tao func connectDB (trong models/index.js đã config connect tới Database)
 👉 Controller : import db để truy xuất Database
+
+#22 Phân tích table Database
+👉 G:\FullStack\src\public\1.Backend_DB_DesignTable.png
+👉 G:\FullStack\src\public\2.Backend_DB_SampleData.png

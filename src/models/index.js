@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV;//|| 'development'
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
@@ -25,7 +25,6 @@ fs
     db[model.name] = model;
   });
 
-//Map tới All modelName : chinh la tất cả model trong folder models (VD: table user.js)
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
