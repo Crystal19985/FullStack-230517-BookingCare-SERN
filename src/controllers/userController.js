@@ -10,7 +10,7 @@ let handleLogin = async (req, res) => {
     if (!email || !password) {
         return res.status(500).json({
             errCode: 1,
-            msessage: 'Missing input parameters',
+            message: 'Missing input parameters',
         })
     }
 
@@ -21,10 +21,30 @@ let handleLogin = async (req, res) => {
         message: userData.errMessage,
         user: userData.user ? userData.user : {},
     })
+}
 
-    return
+let handleGetAllUsers = async (req, res) => {
+    let id = req.query.id;// ALL --> Get All users, id --> Get a user
+
+    if (!id) {
+        return res.status(500).json({
+            errCode: 1,
+            message: 'Missing input parameters',
+            users: {}
+        })
+    }
+
+    let users = await userService.getAllUsers(id);
+
+    return res.status(200).json({
+        errCode: 0,
+        message: 'OK',
+        users
+    })
+
 }
 
 module.exports = {
     handleLogin: handleLogin,
+    handleGetAllUsers: handleGetAllUsers,
 }

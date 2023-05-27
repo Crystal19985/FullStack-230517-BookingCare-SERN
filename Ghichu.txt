@@ -9,6 +9,10 @@
     + truy xuất service lấy database ==> render DB tới View
 
 
+👉  File cấu hình sequelize : G:\FullStack\BackendNodejs\src\models\index.js
+    google : Setting all queries to raw = true sequelize ==> khi query chi return raw data
+
+
 
 #19 
     DB : XAMPP MySql
@@ -36,3 +40,7 @@
 #22 Phân tích table Database
 👉 G:\FullStack\src\public\1.Backend_DB_DesignTable.png
 👉 G:\FullStack\src\public\2.Backend_DB_SampleData.png
+
+#36
+    ??????? npm cors laf gi ????
+    ??? Đã customize package axio thành axios.js (Mục đích làm gì >>>???)

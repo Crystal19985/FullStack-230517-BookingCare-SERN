@@ -11,9 +11,10 @@ let initWebRouters = (app) => {
     router.get('/edit-crud', homeController.getEditCRUD)
 
     router.post('/post-crud', homeController.postCRUD)
-    router.post('/put-crud', homeController.postEditCRUD)
+    router.post('/put-crud', homeController.postEditCRUD);
 
-    router.post('/api/login', userController.handleLogin)
+    router.post('/api/login', userController.handleLogin);
+    router.get('/api/get-all-users', userController.handleGetAllUsers);
 
     return app.use('/', router);
 }
