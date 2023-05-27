@@ -44,7 +44,50 @@ let handleGetAllUsers = async (req, res) => {
 
 }
 
+let handleCreateNewUser = async (req, res) => {
+    //Truoc khi query can phai validate req.body : Missing params?
+    let message = await userService.createNewUser(req.body);
+
+    return res.status(200).json({
+        message: message,
+    })
+}
+
+let handleEditUser = async (req, res) => {
+    //Truoc khi query can phai validate req.body : Missing params?
+    if (!req.body)
+        return res.status(200).json({
+            errCode: 1,
+            message: 'Missing input parameters'
+        })
+
+    let message = await userService.editUser(req.body);
+
+    return res.status(200).json({
+        message: message,
+    })
+}
+
+let handleDeleteUser = async (req, res) => {
+    //Truoc khi query can phai validate req.body : Missing params?
+    if (!req.body.id)
+        return res.status(200).json({
+            errCode: 1,
+            message: 'Missing input parameters'
+        })
+
+    let message = await userService.deleteUser(req.body.id);
+
+    return res.status(200).json({
+        errCode: 0,
+        message: message
+    })
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUsers: handleGetAllUsers,
+    handleCreateNewUser: handleCreateNewUser,
+    handleEditUser: handleEditUser,
+    handleDeleteUser: handleDeleteUser,
 }
