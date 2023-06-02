@@ -41,7 +41,6 @@ let handleGetAllUsers = async (req, res) => {
         message: 'OK',
         users
     })
-
 }
 
 let handleCreateNewUser = async (req, res) => {
@@ -49,7 +48,9 @@ let handleCreateNewUser = async (req, res) => {
     let message = await userService.createNewUser(req.body);
 
     return res.status(200).json({
-        message: message,
+        errCode: message.errCode,
+        message: message.errMessage,
+        response: message
     })
 }
 
@@ -61,16 +62,18 @@ let handleEditUser = async (req, res) => {
             message: 'Missing input parameters'
         })
 
-    let message = await userService.editUser(req.body);
+    let response = await userService.editUserService(req.body);
 
     return res.status(200).json({
-        message: message,
+        errCode: response.errCode,
+        message: response.errMessage,
+        response: response
     })
 }
 
 let handleDeleteUser = async (req, res) => {
-    //Truoc khi query can phai validate req.body : Missing params?
     if (!req.body.id)
+        //Truoc khi query can phai validate req.body : Missing params?
         return res.status(200).json({
             errCode: 1,
             message: 'Missing input parameters'
@@ -80,8 +83,21 @@ let handleDeleteUser = async (req, res) => {
 
     return res.status(200).json({
         errCode: 0,
-        message: message
+        message: message.errMessage
     })
+}
+
+let getAllCode = async (req, res) => {
+    try {
+        let typeInput = req.query.type;
+        let data = await userService.getAllCodeService(typeInput);
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
+    }
 }
 
 module.exports = {
@@ -90,4 +106,5 @@ module.exports = {
     handleCreateNewUser: handleCreateNewUser,
     handleEditUser: handleEditUser,
     handleDeleteUser: handleDeleteUser,
+    getAllCode: getAllCode,
 }

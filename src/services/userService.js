@@ -107,7 +107,8 @@ let createNewUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             //Check isMailExist
-            if (checkUserMail) {
+            let isEmailExist = await checkUserMail(data.email)  //neu cho ham checkUserMail truc tiep vao if se bi bat dong bo
+            if (isEmailExist) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Email is already exist. Pls choose another email',
@@ -131,7 +132,7 @@ let createNewUser = (data) => {
 
             resolve({
                 errCode: 0,
-                errMessage: 'OK',
+                errMessage: 'OK. Create a new user is successed',
             });
 
         } catch (error) {
@@ -151,7 +152,7 @@ let hashPWByBcrypt = (password) => {
     })
 }
 
-let editUser = (userData) => {
+let editUserService = (userData) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!userData.id) {
@@ -212,10 +213,42 @@ let deleteUser = (userId) => {
         }
     })
 }
+
+let getAllCodeService = (typeInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let res = {};
+
+            if (!typeInput) {
+                resovle({
+                    errCode: 1,
+                    errMessage: 'Missing input parameters'
+                })
+            }
+            else {
+                let allCode = await db.Allcode.findAll({
+                    where: { type: typeInput },
+                })
+
+                res.errCode = 0;
+                res.errMessage = 'Success';
+                res.data = allCode;
+                resolve(res);
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+
+}
+
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
-    editUser: editUser,
+    editUser: editUserService,
     deleteUser: deleteUser,
+    getAllCodeService: getAllCodeService,
 }
