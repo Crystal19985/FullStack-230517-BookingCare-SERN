@@ -13,7 +13,7 @@ let handleUserLogin = (email, password) => {
                 // User already
                 // Compare PW
                 let user = await db.User.findOne({
-                    attributes: ['email', 'password', 'roleId'], //
+                    attributes: ['email', 'password', 'roleId', 'lastName', 'firstName'], //
                     where: { email: email },
                     raw: true,
                 })
@@ -124,10 +124,10 @@ let createNewUser = (data) => {
                 lastName: data.lastName,
                 address: data.address,
                 phonenumber: data.phonenumber,
-                gender: data.gender === 1 ? true : false,
+                gender: data.gender,
                 //image: data.email,
                 roleId: data.roleId,
-                //positionId: data.email, 
+                positionId: data.positionId,
             })
 
             resolve({
@@ -155,7 +155,7 @@ let hashPWByBcrypt = (password) => {
 let editUserService = (userData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!userData.id) {
+            if (!userData.id || !userData.roleId || !userData.positionId || !userData.gender) {
                 resolve({
                     errCode: 2,
                     errMessage: 'Missing input parameters'
@@ -169,6 +169,10 @@ let editUserService = (userData) => {
                 user.firstName = userData.firstName;
                 user.lastName = userData.lastName;
                 user.address = userData.address;
+                user.roleId = userData.roleId;
+                user.positionId = userData.positionId;
+                user.gender = userData.gender;
+                user.phonenumber = userData.phonenumber;
 
                 await user.save();
                 resolve({
@@ -248,7 +252,7 @@ module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
-    editUser: editUserService,
+    editUserService: editUserService,
     deleteUser: deleteUser,
     getAllCodeService: getAllCodeService,
 }
