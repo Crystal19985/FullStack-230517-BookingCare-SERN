@@ -74,6 +74,47 @@ let createInforDoctorService = (data) => {
     })
 }
 
+let getInforDoctorByIdService = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing input parameters'
+                })
+            }
+            else {
+                let doctorInfor = await db.User.findOne({
+                    where: { id: inputId },
+                    attributes: {
+                        exclude: ['password', 'image']
+                    },
+                    include: [
+                        {
+                            model: db.Markdown, attributes: [
+                                'contentHTML',
+                                'contentMarkdown',
+                                'description',
+                            ]
+                        },
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
+
+                resolve({
+                    errCode: 0,
+                    data: doctorInfor
+                })
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 
 
 
@@ -83,4 +124,5 @@ module.exports = {
     getTopDoctorHomeService: getTopDoctorHomeService,
     getAllDoctorsService: getAllDoctorsService,
     createInforDoctorService: createInforDoctorService,
+    getInforDoctorByIdService: getInforDoctorByIdService,
 };

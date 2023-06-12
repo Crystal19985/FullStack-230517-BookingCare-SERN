@@ -43,6 +43,20 @@ let createInforDoctor = async (req, res) => {
     }
 }
 
+let getInforDoctorById = async (req, res) => {
+    try {
+        let responInfo = await docterService.getInforDoctorByIdService(req.query.id);
+        return res.status(200).json(responInfo);
+    } catch (error) {
+        return res.status(200).json({
+            errCode: -1,
+            msg: 'Error from server'
+        })
+    }
+}
+
+
+
 
 
 
@@ -50,5 +64,6 @@ module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
     createInforDoctor: createInforDoctor,
+    getInforDoctorById: getInforDoctorById,
 
 }
