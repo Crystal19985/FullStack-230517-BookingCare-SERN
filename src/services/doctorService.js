@@ -28,6 +28,59 @@ let getTopDoctorHomeService = (limitInput) => {
     })
 }
 
+let getAllDoctorsService = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctors = await db.User.findAll({
+                where: { roleId: 'R2' },
+                attributes: {
+                    exclude: ['password', 'image']
+                },
+            });
+            resolve({
+                errCode: 0,
+                data: doctors
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let createInforDoctorService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.doctorId || !data.contentHTML || !data.contentMarkdown) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing input parameters'
+                })
+            }
+            else {
+                await db.Markdown.create({
+                    contentHTML: data.contentHTML,
+                    contentMarkdown: data.contentMarkdown,
+                    description: data.description,
+                    doctorId: data.doctorId
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Save infor doctor is successed'
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+
+
+
+
+
 module.exports = {
     getTopDoctorHomeService: getTopDoctorHomeService,
+    getAllDoctorsService: getAllDoctorsService,
+    createInforDoctorService: createInforDoctorService,
 };
