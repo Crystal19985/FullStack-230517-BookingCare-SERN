@@ -47,26 +47,47 @@ let getAllDoctorsService = () => {
     })
 }
 
-let createInforDoctorService = (data) => {
+let saveInforDoctorService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.doctorId || !data.contentHTML || !data.contentMarkdown) {
+            if (!data.doctorId || !data.contentHTML
+                || !data.contentMarkdown || !data.action) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing input parameters'
                 })
             }
             else {
-                await db.Markdown.create({
-                    contentHTML: data.contentHTML,
-                    contentMarkdown: data.contentMarkdown,
-                    description: data.description,
-                    doctorId: data.doctorId
-                })
-                resolve({
-                    errCode: 0,
-                    errMessage: 'Save infor doctor is successed'
-                })
+                if (data.action === 'CREATE') {
+                    await db.Markdown.create({
+                        contentHTML: data.contentHTML,
+                        contentMarkdown: data.contentMarkdown,
+                        description: data.description,
+                        doctorId: data.doctorId
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Create infor doctor is successed'
+                    })
+                }
+                else if (data.action === 'EDIT') {
+                    let doctorMarkdown = await db.Markdown.findOne({
+                        where: { doctorId: data.doctorId },
+                        raw: false
+                    })
+
+                    if (doctorMarkdown) {
+                        doctorMarkdown.contentHTML = data.contentHTML;
+                        doctorMarkdown.contentMarkdown = data.contentMarkdown;
+                        doctorMarkdown.description = data.description;
+                        await doctorMarkdown.save();
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'Change infor doctor is successed'
+                        })
+                    }
+                }
+
             }
         } catch (error) {
             reject(error);
@@ -131,6 +152,6 @@ let getInforDoctorByIdService = (inputId) => {
 module.exports = {
     getTopDoctorHomeService: getTopDoctorHomeService,
     getAllDoctorsService: getAllDoctorsService,
-    createInforDoctorService: createInforDoctorService,
+    saveInforDoctorService: saveInforDoctorService,
     getInforDoctorByIdService: getInforDoctorByIdService,
 };

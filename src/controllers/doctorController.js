@@ -31,9 +31,9 @@ let getAllDoctors = async (req, res) => {
     }
 }
 
-let createInforDoctor = async (req, res) => {
+let saveInforDoctor = async (req, res) => {
     try {
-        let respon = await docterService.createInforDoctorService(req.body);
+        let respon = await docterService.saveInforDoctorService(req.body);
         return res.status(200).json(respon);
     } catch (error) {
         return res.status(200).json({
@@ -63,7 +63,7 @@ let getInforDoctorById = async (req, res) => {
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
-    createInforDoctor: createInforDoctor,
+    saveInforDoctor: saveInforDoctor,
     getInforDoctorById: getInforDoctorById,
 
 }
