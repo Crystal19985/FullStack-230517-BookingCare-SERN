@@ -25,7 +25,7 @@ module.exports = {
             timeType: {
                 type: Sequelize.STRING
             },
-            doctorId: {
+            docterId: {
                 type: Sequelize.INTEGER
             },
             createdAt: {
