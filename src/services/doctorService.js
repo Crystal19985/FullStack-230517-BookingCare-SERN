@@ -154,8 +154,6 @@ let getInforDoctorByIdService = (inputId) => {
 let bulkCreateScheduleService = (bulkData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log('============================================', (new Date()).getMinutes);
-            console.log('>>> bulkData', bulkData);
             if (!bulkData.arrScheduleTime || !bulkData.docterId || !bulkData.date) {
                 resolve({
                     errCode: 1,
@@ -205,6 +203,34 @@ let bulkCreateScheduleService = (bulkData) => {
     })
 }
 
+let getScheduleDrByDateService = (docterId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!docterId || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameters !'
+                })
+            }
+            else {
+                let data = await db.Schedule.findAll({
+                    where: { docterId: docterId, date: date },
+                });
+
+                if (!data) data = [];
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'OK !',
+                    data: data
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 /*==========================================================================================*/
 
 
@@ -215,5 +241,5 @@ module.exports = {
     getAllDoctorsService: getAllDoctorsService,
     saveInforDoctorService: saveInforDoctorService,
     getInforDoctorByIdService: getInforDoctorByIdService,
-    bulkCreateScheduleService,
+    bulkCreateScheduleService, getScheduleDrByDateService,
 };
